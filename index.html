@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Font Converter with Visits Counter</title>
+    <title>Font Converter</title>
     <style>
+        /* بک‌گراند زیبا */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -12,6 +13,8 @@
             background: linear-gradient(to right, #6a11cb, #2575fc);
             color: #333;
         }
+
+        /* کانتینر اصلی */
         .container {
             max-width: 500px;
             margin: 5% auto;
@@ -20,66 +23,167 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
             border-radius: 12px;
             text-align: center;
+            transition: transform 0.3s ease-in-out;
         }
+
+        /* افکت کانتینر */
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* عنوان */
         h2 {
             font-size: 28px;
-            margin-bottom: 20px;
+            color: #333;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
-        input, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 100%;
-            font-size: 16px;
-            border-radius: 8px;
-        }
+
+        /* استایل برای متنی که خروجی تولید می‌کند */
         .output {
-            margin: 20px 0;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             font-size: 18px;
+            margin: 10px 0;
+            word-wrap: break-word;
+            transition: all 0.2s ease;
         }
-        .visits {
-            margin-top: 20px;
+
+        /* استایل Input */
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            transition: box-shadow 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #2575fc;
+        }
+
+        /* دکمه‌ها */
+        button {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .copy-button {
+            background: #00bfae;
+        }
+
+        .click-me {
+            background: #ff6a95;
+        }
+
+        /* استایل فوتر */
+        h3 {
+            margin: 20px 0;
             font-size: 16px;
             color: #555;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Font Converter</h2>
-        <input type="text" id="inputText" placeholder="Type text to convert">
-        <button onclick="convertText()">Convert</button>
-        <div class="output" id="outputText">Converted text will appear here...</div>
-        <button onclick="copyToClipboard()">Copy Text</button>
-        <button onclick="window.location.href='https://whatsapp.com/channel/0029Vasu3qP9RZAUkVkvSv32'">Click Me</button>
-        <div class="visits" id="visitsCount">Loading visits...</div>
-    </div>
 
-    <script>
-        function convertText() {
-            const input = document.getElementById("inputText").value;
-            const fontMap = {
-                a: "ᴀ", b: "ʙ", c: "ᴄ", d: "ᴅ", e: "ᴇ", f: "ғ", g: "ɢ", h: "ʜ", i: "ɪ",
-                j: "ᴊ", k: "ᴋ", l: "ʟ", m: "ᴍ", n: "ɴ", o: "ᴏ", p: "ᴘ", q: "ǫ", r: "ʀ",
-                s: "s", t: "ᴛ", u: "ᴜ", v: "ᴠ", w: "ᴡ", x: "x", y: "ʏ", z: "ᴢ"
-            };
-            const output = input.split('').map(char => fontMap[char.toLowerCase()] || char).join('');
-            document.getElementById("outputText").textContent = output;
-        }
+<div class="container">
+    <!-- عنوان اصلی -->
+    <h2>Font Converter</h2>
+    
+    <!-- Input -->
+    <input type="text" id="inputText" placeholder="Type text to convert">
+    
+    <!-- دکمه "تبدیل" -->
+    <button onclick="convertText()">Convert</button>
+    
+    <!-- نمایش خروجی -->
+    <div class="output" id="outputText">Converted text will appear here...</div>
+    
+    <!-- دکمه کپی -->
+    <button class="copy-button" onclick="copyToClipboard()">Copy Text</button>
+    
+    <!-- دکمه Click me که به لینک هدایت کند -->
+    
+    
+    <!-- فوتر -->
+    <div class="output" id="outputText">DEVELOPER IS NOTHING</div>
+    
+    <button class="click-me" onclick="window.location.href='https://whatsapp.com/channel/0029Vasu3qP9RZAUkVkvSv32'">Click Me</button>
+</div>
 
-        function copyToClipboard() {
-            const output = document.getElementById("outputText").textContent;
-            navigator.clipboard.writeText(output).then(() => alert("Copied to clipboard!"));
-        }
+<script>
+    function convertText() {
+        const inputText = document.getElementById('inputText').value;
+        const convertedText = convertToFont(inputText);
+        document.getElementById('outputText').textContent = convertedText;
+    }
 
-        // دریافت تعداد بازدیدها
-        fetch("/visits")
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("visitsCount").textContent = `Total Visits: ${data.visits}`;
-            })
-            .catch(() => {
-                document.getElementById("visitsCount").textContent = "Error loading visits.";
+    function convertToFont(input) {
+        const fontMap = {
+            'a': 'ᴀ',
+            'b': 'ʙ',
+            'c': 'ᴄ',
+            'd': 'ᴅ',
+            'e': 'ᴇ',
+            'f': 'ғ',
+            'g': 'ɢ',
+            'h': 'ʜ',
+            'i': 'ɪ',
+            'j': 'ᴊ',
+            'k': 'ᴋ',
+            'l': 'ʟ',
+            'm': 'ᴍ',
+            'n': 'ɴ',
+            'o': 'ᴏ',
+            'p': 'ᴘ',
+            'q': 'ǫ',
+            'r': 'ʀ',
+            's': 's',
+            't': 'ᴛ',
+            'u': 'ᴜ',
+            'v': 'ᴠ',
+            'w': 'ᴡ',
+            'x': 'x',
+            'y': 'ʏ',
+            'z': 'ᴢ',
+        };
+
+        return input.split('').map(char => fontMap[char.toLowerCase()] || char).join('');
+    }
+
+    function copyToClipboard() {
+        const outputText = document.getElementById('outputText').textContent;
+        if (outputText) {
+            navigator.clipboard.writeText(outputText).then(() => {
+                alert("Text copied successfully!");
+            }, () => {
+                alert('Failed to copy text');
             });
-    </script>
+        } else {
+            alert("Nothing to copy.");
+        }
+    }
+</script>
+
 </body>
 </html>
