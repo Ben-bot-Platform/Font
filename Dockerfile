@@ -1,20 +1,17 @@
-# Use the official Node.js image
+# استفاده از تصویر رسمی Node.js
 FROM node:18
 
-# Set the working directory
+# تنظیم دایرکتوری کاری داخل کانتینر
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy all files to the working directory
+# کپی کردن فایل‌های پروژه به دایرکتوری کاری
 COPY . .
 
-# Expose port 3000
-EXPOSE 3000
+# نصب وابستگی‌ها (در صورت وجود package.json)
+RUN if [ -f package.json ]; then npm install; fi
 
-# Start the application
-CMD ["node", "index.js"]
+# پورت 8080 برای اجرا
+EXPOSE 8080
+
+# اجرای یک سرور ساده برای فایل HTML
+CMD ["npx", "http-server", "-p", "8080"]
