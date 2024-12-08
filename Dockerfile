@@ -1,14 +1,20 @@
-# Use a lightweight web server for serving static files
-FROM httpd:2.4
+# Use the official Node.js image
+FROM node:18
 
-# Set environment variables (if needed)
-ENV NODE_ENV=production
+# Set the working directory
+WORKDIR /app
 
-# Copy your static web files into the web server's default directory
-COPY ./ /usr/local/apache2/htdocs/
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Expose port 80 for the web server
-EXPOSE 80
+# Install dependencies
+RUN npm install
 
-# Start the server (handled automatically by httpd)
-CMD ["httpd-foreground"]
+# Copy all files to the working directory
+COPY . .
+
+# Expose port 3000
+EXPOSE 3000
+
+# Start the application
+CMD ["node", "index.js"]
