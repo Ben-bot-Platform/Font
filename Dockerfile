@@ -5,13 +5,12 @@ FROM node:18
 WORKDIR /app
 
 # کپی فایل‌های پروژه
-COPY . .
-
-# نصب وابستگی‌ها
+COPY package*.json ./
 RUN npm install
+COPY . .
 
 # پورت 8080
 EXPOSE 8080
 
-# اجرای سرور
-CMD ["node", "index.js"]
+# اجرای پروژه
+CMD ["npm", "start"]
