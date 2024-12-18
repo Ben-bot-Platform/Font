@@ -3,32 +3,37 @@ const path = require('path');
 const app = express();
 const port = 8080;
 
-// تابع‌های تبدیل به چند فونت مختلف
-const fontConverters = {
-    fancy: (input) => input.split('').map(char => ({ a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ғ', g: 'ɢ', h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ', l: 'ʟ', m: 'ᴍ', n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'ǫ', r: 'ʀ', s: 's', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ', w: 'ᴡ', x: 'x', y: 'ʏ', z: 'ᴢ' }[char.toLowerCase()] || char)).join(''),
-    reverse: (input) => input.split('').reverse().join(''),
-    uppercase: (input) => input.toUpperCase(),
-    lowercase: (input) => input.toLowerCase(),
-    doubled: (input) => input.split('').map(char => char + char).join(''),
+// مجموعه فونت‌ها
+const fontStyles = {
+    "Bold": text => text.toUpperCase(),
+    "Italic": text => text.split('').map(c => c + '̶').join(''),
+    "Fancy": text => text.split('').map(c => '✦' + c + '✦').join(''),
+    "Japanese": text => text.split('').map(c => c + 'サ').join(''),
+    "Arabic": text => text.split('').map(c => c + 'ا').join(''),
+    "Emoji": text => text.split('').map(c => '🌟' + c + '🌟').join(''),
+    "Cursive": text => text.split('').map(c => c + '𝒸').join(''),
+    "UpsideDown": text => text.split('').reverse().join(''),
+    "Greek": text => text.split('').map(c => c + 'α').join(''),
+    "SmallCaps": text => text.toLowerCase().split('').map(c => c + 'ᶜ').join('')
 };
 
 // مسیر API
 app.get('/api/font-txt', (req, res) => {
-    const text = req.query.text;
+    const text = req.query.text; // دریافت متن از پارامتر "text"
     if (!text) {
         return res.status(400).json({ status: false, message: 'No text provided' });
     }
 
     // تولید فونت‌ها
-    const fonts = {};
-    for (const [name, converter] of Object.entries(fontConverters)) {
-        fonts[name] = converter(text);
-    }
+    const convertedFonts = {};
+    Object.keys(fontStyles).forEach(fontName => {
+        convertedFonts[fontName] = fontStyles[fontName](text);
+    });
 
     res.json({
         status: true,
         creator: 'nothing',
-        data: fonts,
+        data: convertedFonts
     });
 });
 
